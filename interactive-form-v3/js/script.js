@@ -51,25 +51,41 @@ let totalCost = 0;
 
 //event listener that adds up total charges of activities
 activities.addEventListener('change', (e) => {
-    const dataCost = +e.target.getAttribute('data-cost');
+    const activityCost =+ e.target.getAttribute('data-cost');
         if ( e.target.checked) {
-            totalCost += dataCost;
+            totalCost += activityCost;
         } else {
-            totalCost -= dataCost;
+            totalCost -= activityCost;
         }
-    finalCost.textContent = `Total: ${totalCost}`;
+    finalCost.textContent = `Total: $${totalCost}`;
 })
-
-
-
-
-
-
-
 
 
 //payment info
 
+const paymentOption = document.getElementById('payment');
+paymentOption.children[1].setAttribute('selected', true);
+const creditCard = document.getElementById('credit-card');
+creditCard.style.display = '';
+const bitcoin = document.getElementById('bitcoin');
+bitcoin.style.display = 'none';
+const paypal = document.getElementById('paypal');
+paypal.style.display = 'none';
+
+paymentOption.addEventListener('change', (e) => {
+    const selectedPayment = e.target.value;
+
+    if (selectedPayment === 'bitcoin') {
+        bitcoin.style.display = 'block';
+        paypal.style.display = 'none';
+    } else if (selectedPayment === 'paypal') {
+        paypal.style.display = 'block';
+        bitcoin.style.display = 'none';
+    } else {
+        paypal.style.display = 'none';
+        bitcoin.style.display = 'none'; 
+    }
+})
 //form validation 
 
-//accessibilty 
+//accessibilty
