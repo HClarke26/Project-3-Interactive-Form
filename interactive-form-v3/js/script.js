@@ -52,7 +52,7 @@ let totalCost = 0;
 //event listener that adds up total charges of activities
 activities.addEventListener('change', (e) => {
     const activityCost =+ e.target.getAttribute('data-cost');
-        if ( e.target.checked) {
+        if (e.target.checked) {
             totalCost += activityCost;
         } else {
             totalCost -= activityCost;
@@ -86,6 +86,68 @@ paymentOption.addEventListener('change', (e) => {
         bitcoin.style.display = 'none'; 
     }
 })
+
 //form validation 
 
-//accessibilty
+const emailInput = document.getElementById('email');
+const cardNumberInput = document.getElementById('cc-num');
+const zipCodeInput = document.getElementById('zip');
+const cvvInput = document.getElementById('cvv');
+const form = document.querySelector('form');
+
+// helper functions
+
+function isValidName () {
+    const nameRegEx = /^[\w]+\s*[\w]+$/.test(nameInput.value);
+    return nameRegEx
+}
+
+function isValidEmail () {
+    const emailRegEx =  /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailInput.value);
+    return emailRegEx
+}
+
+function isValidActivities () {
+    if (totalCost !== 0) {
+        return true
+    }
+}
+
+function isValidCardNumber () {
+    const cardNumberRegEx = /^\d{13,16}$/.test(cardNumberInput.value)
+    return cardNumberRegEx
+}
+function isValidZipCode () {
+    const zipRegEx = /^\d{5}$/.test(zipCodeInput.value)
+    return zipRegEx
+}
+
+function isValidCvv () {
+    const CvvRegEx = /^\d{3}$/.test(cvvInput.value)
+    return CvvRegEx
+}
+
+function isValidPayment () {
+    if (paymentOption.value === 'credit-card') {
+        if (isValidCardNumber() && isValidCvv() && isValidZipCode()) {
+            return true
+        }       
+    }
+}
+    
+    
+
+form.addEventListener('submit', (e) => {
+    
+    if ( isValidName() && isValidEmail() && isValidActivities() && isValidPayment()) {
+        console.log('form submited');
+    } else {
+        e.preventDefault();
+        isValidName();
+        isValidEmail(); 
+        isValidPayment();
+        isValidActivities();
+        console.log('Incorrect user inputs');
+    }
+});
+
