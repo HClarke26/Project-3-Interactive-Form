@@ -1,7 +1,5 @@
 // Project 3 
 
-
-
 //Name Field
 const nameInput = document.getElementById("name");
 nameInput.focus();
@@ -135,7 +133,7 @@ function isValidPayment () {
     }
 }
     
-    
+ // Event listener for submitting the form   
 
 form.addEventListener('submit', (e) => {
     
@@ -150,4 +148,18 @@ form.addEventListener('submit', (e) => {
         console.log('Incorrect user inputs');
     }
 });
+
+// Accessibility 
+
+const checkboxInput = document.getElementById("activities-box");
+
+for(i = 0; i < checkboxInput.length; i++) {
+    checkboxInput[i].addEventListener('focus', (e) => {
+        checkboxInput[i].parentElement.classList.add('focus');
+    });
+    checkboxInput[i].addEventListener('blur', (e) => {
+        checkboxInput[i].parentElement.classList.remove('focus');
+    });
+}
+
 
