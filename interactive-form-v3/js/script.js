@@ -151,8 +151,8 @@ form.addEventListener('submit', (e) => {
 
 // Accessibility 
 
-const checkboxInput = document.getElementById("activities-box");
-
+const checkboxInput = document.querySelectorAll('#activities-box input');
+console.log(checkboxInput)
 for(i = 0; i < checkboxInput.length; i++) {
     checkboxInput[i].addEventListener('focus', (e) => {
         checkboxInput[i].parentElement.classList.add('focus');
