@@ -97,32 +97,82 @@ const form = document.querySelector('form');
 
 function isValidName () {
     const nameRegEx = /^[\w]+\s*[\w]+$/.test(nameInput.value);
-    return nameRegEx
+    if (nameRegEx === true) {
+        nameInput.parentNode.className='valid';
+        nameInput.parentNode.lastElementChild.style.display = 'none';
+        return nameRegEx
+    } else {
+        nameInput.parentNode.className='not-valid';
+        nameInput.parentNode.lastElementChild.style.display = 'block';
+        nameInput.parentNode.lastElementChild.textContent = 'Invalid input. This field must only contain letters.'
+        return nameRegEx
+    }
 }
 
 function isValidEmail () {
     const emailRegEx =  /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailInput.value);
-    return emailRegEx
+    if (emailRegEx === true) {
+        emailInput.parentNode.className='valid';
+        emailInput.parentNode.lastElementChild.style.display = 'none';
+        return emailRegEx
+    } else {
+        emailInput.parentNode.className='not-valid';
+        emailInput.parentNode.lastElementChild.style.display = 'block';
+        emailInput.parentNode.lastElementChild.textContent = 'Invalid input. Please enter a valid email.'
+        return emailRegEx
+    }
 }
 
 function isValidActivities () {
+    let activitiesBox = document.getElementById("activities-box")
     if (totalCost !== 0) {
         return true
+    } else {
+        activitiesBox.parentNode.className='not-valid';
+        activitiesBox.parentNode.lastElementChild.style.display = 'block';
+        activitiesBox.parentNode.lastElementChild.textContent = 'Invalid input. Please enter a valid email.'
     }
 }
 
 function isValidCardNumber () {
     const cardNumberRegEx = /^\d{13,16}$/.test(cardNumberInput.value)
-    return cardNumberRegEx
+    if (cardNumberRegEx === true) {
+        cardNumberInput.parentNode.className='valid';
+        cardNumberInput.parentNode.lastElementChild.style.display = 'none';
+        return cardNumberRegEx
+    } else {
+        cardNumberInput.parentNode.className='not-valid';
+        cardNumberInput.parentNode.lastElementChild.style.display = 'block';
+        cardNumberInput.parentNode.lastElementChild.textContent = 'Invalid input. Please enter a valid card number.'
+        return cardNumberRegEx
+    }
 }
 function isValidZipCode () {
-    const zipRegEx = /^\d{5}$/.test(zipCodeInput.value)
-    return zipRegEx
+    const zipRegEx = /^[0-9]{5}$/.test(zipCodeInput.value)
+    if (zipRegEx === true) {
+        zipCodeInput.parentNode.className='valid';
+        zipCodeInput.parentNode.lastElementChild.style.display = 'none';
+        return zipRegEx
+    } else {
+        zipCodeInput.parentNode.className='not-valid';
+        zipCodeInput.parentNode.lastElementChild.style.display = 'block';
+        zipCodeInput.parentNode.lastElementChild.textContent = 'Invalid input. Please enter a valid zip code.'
+        return zipRegEx
+    }
 }
 
 function isValidCvv () {
     const CvvRegEx = /^\d{3}$/.test(cvvInput.value)
-    return CvvRegEx
+    if (CvvRegEx === true) {
+        cvvInput.parentNode.className='valid';
+        cvvInput.parentNode.lastElementChild.style.display = 'none';
+        return zipRegEx
+    } else {
+        cvvInput.parentNode.className='not-valid';
+        cvvInput.parentNode.lastElementChild.style.display = 'block';
+        cvvInput.parentNode.lastElementChild.textContent = 'Invalid input. Please enter a valid CVV number.'
+        return zipRegEx
+    }
 }
 
 function isValidPayment () {
@@ -153,7 +203,7 @@ form.addEventListener('submit', (e) => {
 
 const checkboxInput = document.querySelectorAll('#activities-box input');
 console.log(checkboxInput)
-for(i = 0; i < checkboxInput.length; i++) {
+for(let i = 0; i < checkboxInput.length; i++) {
     checkboxInput[i].addEventListener('focus', (e) => {
         checkboxInput[i].parentElement.classList.add('focus');
     });
