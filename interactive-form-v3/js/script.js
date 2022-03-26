@@ -1,11 +1,11 @@
-// Project 3 
+// Project 3 - Interactive Form
 
 //Name Field
 const nameInput = document.getElementById("name");
 nameInput.focus();
 
 
-//Job Role
+//Job Role section
 const jobRoleInput = document.getElementById("title");
 const otherJobRoleInput = document.getElementById("other-job-role");
 
@@ -20,7 +20,7 @@ jobRoleInput.addEventListener('click', (e) => {
 });
 
 
-//T shirt 
+//T shirt section
 const designInput = document.getElementById("design");
 const colorInput = document.getElementById("color");
 
@@ -29,9 +29,8 @@ colorInput.disabled = true ;
 designInput.addEventListener('change', (e) => {
     colorInput.disabled = false ;
     for (let i = 0 ; i < colorInput.length; i++) {
-        // conditional (Ternary Operator)********************************************************
+        // conditional (Ternary Operator)
         colorInput.value = colorInput[i].value ? 'Select a design theme above': colorInput[i].value;
-        // design option[value] == color option[data-theme]
         if (e.target.value === colorInput[i].getAttribute('data-theme')){             
             colorInput[i].hidden = false;           
         } else {
@@ -42,12 +41,11 @@ designInput.addEventListener('change', (e) => {
 
 
 //Register for activities
-
 const activities = document.getElementById('activities');
 const finalCost = document.getElementById('activities-cost');
 let totalCost = 0;
 
-//event listener that adds up total charges of activities
+//Event listener that adds up total charges of activities
 activities.addEventListener('change', (e) => {
     const activityCost =+ e.target.getAttribute('data-cost');
         if (e.target.checked) {
@@ -59,8 +57,7 @@ activities.addEventListener('change', (e) => {
 })
 
 
-//payment info
-
+//Payment information section
 const paymentOption = document.getElementById('payment');
 paymentOption.children[1].setAttribute('selected', true);
 const creditCard = document.getElementById('credit-card');
@@ -76,25 +73,25 @@ paymentOption.addEventListener('change', (e) => {
     if (selectedPayment === 'bitcoin') {
         bitcoin.style.display = 'block';
         paypal.style.display = 'none';
+        creditCard.style.display = 'none';
     } else if (selectedPayment === 'paypal') {
         paypal.style.display = 'block';
         bitcoin.style.display = 'none';
+        creditCard.style.display = 'none';
     } else {
         paypal.style.display = 'none';
         bitcoin.style.display = 'none'; 
     }
 })
 
-//form validation 
-
+//Form validation section
 const emailInput = document.getElementById('email');
 const cardNumberInput = document.getElementById('cc-num');
 const zipCodeInput = document.getElementById('zip');
 const cvvInput = document.getElementById('cvv');
 const form = document.querySelector('form');
 
-// helper functions
-
+//Helper functions
 function isValidName () {
     const nameRegEx = /^[\w]+\s*[\w]+$/.test(nameInput.value);
     if (nameRegEx === true) {
@@ -124,15 +121,17 @@ function isValidEmail () {
 }
 
 function isValidActivities () {
-    let activitiesBox = document.getElementById("activities-box")
-    if (totalCost !== 0) {
+    let checkedBox = document.querySelectorAll('[type="checkbox"]:checked')
+    if (checkedBox.length > 0) {
+        activities.parentNode.className='valid';
+        activities.parentNode.lastElementChild.style.display = 'none';
         return true
     } else {
-        activitiesBox.parentNode.className='not-valid';
-        activitiesBox.parentNode.lastElementChild.style.display = 'block';
-        activitiesBox.parentNode.lastElementChild.textContent = 'Invalid input. Please enter a valid email.'
-    }
-}
+        activities.parentNode.className='not-valid';
+        activities.parentNode.lastElementChild.style.display = 'block'
+        activities.lastElementChild.textContent = 'Please select at least one activity.'
+    }   
+} 
 
 function isValidCardNumber () {
     const cardNumberRegEx = /^\d{13,16}$/.test(cardNumberInput.value)
@@ -166,28 +165,29 @@ function isValidCvv () {
     if (CvvRegEx === true) {
         cvvInput.parentNode.className='valid';
         cvvInput.parentNode.lastElementChild.style.display = 'none';
-        return zipRegEx
+        return CvvRegEx
     } else {
         cvvInput.parentNode.className='not-valid';
         cvvInput.parentNode.lastElementChild.style.display = 'block';
         cvvInput.parentNode.lastElementChild.textContent = 'Invalid input. Please enter a valid CVV number.'
-        return zipRegEx
+        return CvvRegEx
     }
 }
 
 function isValidPayment () {
     if (paymentOption.value === 'credit-card') {
-        if (isValidCardNumber() && isValidCvv() && isValidZipCode()) {
-            return true
-        }       
+        isValidCardNumber()
+        isValidCvv()
+        isValidZipCode()  
+        }  
+    return true     
     }
-}
-    
- // Event listener for submitting the form   
 
+    
+//Event listener for submitting the form   
 form.addEventListener('submit', (e) => {
     
-    if ( isValidName() && isValidEmail() && isValidActivities() && isValidPayment()) {
+    if (isValidName() && isValidEmail() && isValidActivities() && isValidPayment() && isValidCvv() && isValidZipCode()) {
         console.log('form submited');
     } else {
         e.preventDefault();
@@ -199,8 +199,7 @@ form.addEventListener('submit', (e) => {
     }
 });
 
-// Accessibility 
-
+//Accessibility section
 const checkboxInput = document.querySelectorAll('#activities-box input');
 console.log(checkboxInput)
 for(let i = 0; i < checkboxInput.length; i++) {
