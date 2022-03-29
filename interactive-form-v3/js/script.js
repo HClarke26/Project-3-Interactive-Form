@@ -132,13 +132,14 @@ function isValidActivities () {
     let checkedBox = document.querySelectorAll('[type="checkbox"]:checked')
     let activitiesBox = document.getElementById('activities-box')
     if (checkedBox.length > 0) {
-        activitiesBox.parentNode.className='valid';
+        activitiesBox.parentNode.classList.add('valid');
         activitiesBox.parentNode.lastElementChild.style.display = 'none';
+        activitiesBox.parentNode.classList.remove('not-valid');
         return true
     } else {
-        activitiesBox.parentNode.className='not-valid';
+        activitiesBox.parentNode.classList.add('not-valid');
         activitiesBox.parentNode.lastElementChild.style.display = 'block'
-        activitiesBox.lastElementChild.textContent = 'Please select at least one activity.'
+        return false
     }   
 } 
 
@@ -189,15 +190,19 @@ function isValidCvv () {
     }
 }
 
-//NEED HELP WITH THIS FUNCTION
 function isValidPayment () {
     if (paymentOption.value === 'credit-card') {
-        isValidCardNumber()
-        isValidZipCode() 
-        isValidCvv()
-        }    
+        let valid = true;
+        valid *= isValidCardNumber()
+        valid *= isValidZipCode()
+        valid *= isValidCvv()
+        return valid;
+        } else if (paymentOption.value === 'paypal') {
+            return true
+        } else if (paymentOption.value === 'bitcoin'){
+            return true 
     }
-
+}
     
 //Event listener for submitting the form   
 form.addEventListener('submit', (e) => {
